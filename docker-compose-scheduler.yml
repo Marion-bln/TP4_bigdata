@@ -1,0 +1,25 @@
+services:
+
+  airflow-scheduler:
+    image: apache/airflow:2.8.1
+    container_name: airflow-scheduler
+    environment:
+      AIRFLOW__CORE__EXECUTOR: LocalExecutor
+      AIRFLOW__CORE__SQL_ALCHEMY_CONN: postgresql+psycopg2://airflow:airflow@postgres/airflow
+      AIRFLOW__CORE__FERNET_KEY: "CIGs3wS91muQD-yDtR45qf-0DoCWA40isRIWamxji5w="
+    volumes:
+      - ./dags:/opt/airflow/dags
+      - ./logs:/opt/airflow/logs
+      - ./plugins:/opt/airflow/plugins
+      - ./requirements.txt:/requirements.txt
+    depends_on:
+      - postgres
+    command: >
+      bash -c "
+      pip install -r /requirements.txt &&
+      airflow webserver"
+    restart: always
+
+networks:
+  data-pipeline-net:
+    external: true

@@ -1,0 +1,25 @@
+services:
+
+  airflow-webserver:
+    image: apache/airflow:2.8.1
+    container_name: airflow-webserver
+    environment:
+      AIRFLOW__CORE__EXECUTOR: LocalExecutor
+      AIRFLOW__CORE__SQL_ALCHEMY_CONN: postgresql+psycopg2://airflow:airflow@postgres/airflow
+      AIRFLOW__CORE__FERNET_KEY: "CIGs3wS91muQD-yDtR45qf-0DoCWA40isRIWamxji5w="
+      AIRFLOW__WEBSERVER__DEFAULT_UI_TIMEZONE: Europe/Paris
+    volumes:
+      - ./dags:/opt/airflow/dags
+      - ./logs:/opt/airflow/logs
+      - ./plugins:/opt/airflow/plugins
+      - ./requirements.txt:/requirements.txt
+    depends_on:
+      - postgres
+    ports:
+      - "8082:8080"
+    command: >
+      bash -c "
+      pip install -r /requirements.txt &&
+      airflow webserver"
+    networks:
+      - data-pipeline-net

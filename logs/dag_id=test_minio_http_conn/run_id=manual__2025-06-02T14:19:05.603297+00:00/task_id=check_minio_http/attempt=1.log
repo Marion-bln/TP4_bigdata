@@ -1,0 +1,31 @@
+[2025-06-02T14:19:06.630+0000] {taskinstance.py:1956} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: test_minio_http_conn.check_minio_http manual__2025-06-02T14:19:05.603297+00:00 [queued]>
+[2025-06-02T14:19:06.642+0000] {taskinstance.py:1956} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: test_minio_http_conn.check_minio_http manual__2025-06-02T14:19:05.603297+00:00 [queued]>
+[2025-06-02T14:19:06.643+0000] {taskinstance.py:2170} INFO - Starting attempt 1 of 1
+[2025-06-02T14:19:06.661+0000] {taskinstance.py:2191} INFO - Executing <Task(PythonOperator): check_minio_http> on 2025-06-02 14:19:05.603297+00:00
+[2025-06-02T14:19:06.678+0000] {standard_task_runner.py:60} INFO - Started process 244 to run task
+[2025-06-02T14:19:06.698+0000] {standard_task_runner.py:87} INFO - Running: ['***', 'tasks', 'run', 'test_minio_http_conn', 'check_minio_http', 'manual__2025-06-02T14:19:05.603297+00:00', '--job-id', '4', '--raw', '--subdir', 'DAGS_FOLDER/test_minio.py', '--cfg-path', '/tmp/tmpqaoxt5yc']
+[2025-06-02T14:19:06.704+0000] {standard_task_runner.py:88} INFO - Job 4: Subtask check_minio_http
+[2025-06-02T14:19:06.732+0000] {logging_mixin.py:188} WARNING - /home/***/.local/lib/python3.8/site-packages/***/settings.py:194 DeprecationWarning: The sql_alchemy_conn option in [core] has been moved to the sql_alchemy_conn option in [database] - the old setting has been used, but please update your config.
+[2025-06-02T14:19:06.778+0000] {task_command.py:423} INFO - Running <TaskInstance: test_minio_http_conn.check_minio_http manual__2025-06-02T14:19:05.603297+00:00 [running]> on host 29e48b8100b6
+[2025-06-02T14:19:06.854+0000] {taskinstance.py:2480} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='test_minio_http_conn' AIRFLOW_CTX_TASK_ID='check_minio_http' AIRFLOW_CTX_EXECUTION_DATE='2025-06-02T14:19:05.603297+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2025-06-02T14:19:05.603297+00:00'
+[2025-06-02T14:19:06.864+0000] {base.py:83} INFO - Using connection ID 'minio_con' for task execution.
+[2025-06-02T14:19:06.865+0000] {logging_mixin.py:188} WARNING - <string>:9 UserWarning: AWS Connection (conn_id='minio_con', conn_type='http') expected connection type 'aws', got 'http'. This connection might not work correctly. Please use Amazon Web Services Connection type.
+[2025-06-02T14:19:06.866+0000] {connection_wrapper.py:378} INFO - AWS Connection (conn_id='minio_con', conn_type='http') credentials retrieved from login and password.
+[2025-06-02T14:19:06.867+0000] {logging_mixin.py:188} WARNING - <string>:9 AirflowProviderDeprecationWarning: Host http://minio:9000 specified in the connection is not used. Please, set it on extra['endpoint_url'] instead
+[2025-06-02T14:19:08.442+0000] {s3.py:293} ERROR - Access to bucket "bronze" is forbidden or there was an error with the request
+[2025-06-02T14:19:08.449+0000] {s3.py:296} ERROR - An error occurred (403) when calling the HeadBucket operation: Forbidden
+[2025-06-02T14:19:08.492+0000] {taskinstance.py:2698} ERROR - Task failed with exception
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/models/taskinstance.py", line 433, in _execute_task
+    result = execute_callable(context=context, **execute_callable_kwargs)
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/operators/python.py", line 199, in execute
+    return_value = self.execute_callable()
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/operators/python.py", line 216, in execute_callable
+    return self.python_callable(*self.op_args, **self.op_kwargs)
+  File "/opt/airflow/dags/test_minio.py", line 11, in check_minio_via_http
+    raise Exception(f"Bucket '{bucket}' non trouvé.")
+Exception: Bucket 'bronze' non trouvé.
+[2025-06-02T14:19:08.684+0000] {taskinstance.py:1138} INFO - Marking task as FAILED. dag_id=test_minio_http_conn, task_id=check_minio_http, execution_date=20250602T141905, start_date=20250602T141906, end_date=20250602T141908
+[2025-06-02T14:19:08.765+0000] {standard_task_runner.py:107} ERROR - Failed to execute job 4 for task check_minio_http (Bucket 'bronze' non trouvé.; 244)
+[2025-06-02T14:19:08.841+0000] {local_task_job_runner.py:234} INFO - Task exited with return code 1
+[2025-06-02T14:19:08.923+0000] {taskinstance.py:3280} INFO - 0 downstream tasks scheduled from follow-on schedule check
