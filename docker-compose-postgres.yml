@@ -1,7 +1,7 @@
 services:
   postgres:
     image: postgres:15
-    container_name: airflow-postgres
+    container_name: postgres
     environment:
       POSTGRES_USER: airflow
       POSTGRES_PASSWORD: airflow
@@ -20,3 +20,5 @@ volumes:
 networks:
   data-pipeline-net:
     external: true
+
+
